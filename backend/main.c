@@ -92,9 +92,27 @@ int main() {
         scanf("%lld %ld", &n, &e);
         printf("Digite o valor a ser encriptado (um número):\n");
         long long int mensagem;
-        scanf("%lld", &mensagem);
+        //scanf("%lld", &mensagem);
+        
+        //recebe txt para ser encriptografado
+        FILE *pont_m = fopen("teste.txt", "r");
+        fscanf(pont_m, "%lld", &mensagem);
+        fclose(pont_m);
+
         long long int encriptada = exponenciacao_modular(mensagem, e, n);
+        
+        //exporta txt encriptografado
+        FILE *pont = fopen("mensagem_encriptografada.txt", "w");
+        if (pont != NULL) {
+            fprintf(pont, "%lld\n", encriptada);
+            fclose(pont);
+            printf("Mensagem gerada e salva no arquivo 'mensagem_encriptografada.txt'.\n");
+        } else {
+            printf("Erro ao abrir o arquivo!\n");
+        }
+        
         printf("Mensagem encriptada: %lld\n", encriptada);
+        
         break;
 
     case 3: // Desencriptar
