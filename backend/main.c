@@ -92,6 +92,7 @@ int main() {
         scanf("%lld %ld", &n, &e);
         printf("Digite o valor a ser encriptado (um número):\n");
         long long int mensagem;
+        
         //scanf("%lld", &mensagem);
         
         //recebe txt para ser encriptografado
@@ -112,7 +113,6 @@ int main() {
         }
         
         printf("Mensagem encriptada: %lld\n", encriptada);
-        
         break;
 
     case 3: // Desencriptar
@@ -123,14 +123,16 @@ int main() {
         algoritmo_euclides_estendido(e, produtopq, &d, &t);
         if (d < 0) {
             d += produtopq;
-        }
-        printf("Chave privada (D): %d\n", d);
+        }        
+        long long int n = p * q;
+        printf("Chave privada (D,E): (%d,%lld)\n", d, n);
         //pegar o texto puro. por enquanto sera um numero so
 
         int numero;
         scanf("%d", &numero);
         long long int desencriptado = exponenciacao_modular(numero, d, n);
-
+        //printf("%lld\n", desencriptado);
+        printf("%lld\n", desencriptado);
         break;
 
     default:
