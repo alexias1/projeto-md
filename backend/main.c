@@ -68,15 +68,12 @@ void gerar_chave_publica(GtkWidget *widget, gpointer data) {
     gtk_container_add(GTK_CONTAINER(content_area), label);
     
     GtkWidget *entry_p = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_p), "P");
     gtk_container_add(GTK_CONTAINER(content_area), entry_p);
 
     GtkWidget *entry_q = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_q), "Q");
     gtk_container_add(GTK_CONTAINER(content_area), entry_q);
 
     GtkWidget *entry_e = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_e), "E");
     gtk_container_add(GTK_CONTAINER(content_area), entry_e);
 
     gtk_widget_show_all(dialog);
@@ -101,7 +98,7 @@ void gerar_chave_publica(GtkWidget *widget, gpointer data) {
             gtk_dialog_run(GTK_DIALOG(error_msg));
             gtk_widget_destroy(error_msg);
             return;
-        } //pode retirar essa parte, sera que tiro? pq se tirar fica sem aparecer mensagem se der algum erro
+        }
 
         //Checando se P e Q são primos
         if (calcular_primo(p) == 0 || calcular_primo(q) == 0) {
@@ -134,7 +131,7 @@ void gerar_chave_publica(GtkWidget *widget, gpointer data) {
             return;
         }
 
-        // Cálculo de n = p * q e gravação no arquivo
+        //Cálculo de n = p * q e gravação no arquivo
         mpz_mul(n, p, q);
         FILE *pont_arq = fopen("chave_publica.txt", "w");
         if (pont_arq != NULL) {
@@ -152,7 +149,7 @@ void gerar_chave_publica(GtkWidget *widget, gpointer data) {
 
         mpz_clears(n, produtopq, p, q, e, p1, q1, mdc, NULL);
 
-        // Exibe mensagem de sucesso
+        //Exibe mensagem de sucesso
         GtkWidget *msg = gtk_message_dialog_new(GTK_WINDOW(parent_window), GTK_DIALOG_MODAL,
                                                 GTK_MESSAGE_INFO, GTK_BUTTONS_OK,
                                                 "Chave pública gerada e salva!");
@@ -167,7 +164,7 @@ void gerar_chave_publica(GtkWidget *widget, gpointer data) {
 void encriptar(GtkWidget *widget, gpointer data) {
     GtkWidget *parent_window = GTK_WIDGET(data);
 
-    // Cria a caixa de diálogo para inserir N e E
+    //Cria a caixa de diálogo para inserir N e E
     GtkWidget *dialog = gtk_dialog_new_with_buttons("Encriptar",
                                                     GTK_WINDOW(parent_window),
                                                     GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -180,11 +177,9 @@ void encriptar(GtkWidget *widget, gpointer data) {
     gtk_container_add(GTK_CONTAINER(content_area), label);
 
     GtkWidget *entry_n = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_n), "N");
     gtk_container_add(GTK_CONTAINER(content_area), entry_n);
 
     GtkWidget *entry_e = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_e), "E");
     gtk_container_add(GTK_CONTAINER(content_area), entry_e);
 
     gtk_widget_show_all(dialog);
@@ -200,7 +195,7 @@ void encriptar(GtkWidget *widget, gpointer data) {
 
         gtk_widget_destroy(dialog); 
 
-        // Cria a segunda janela para escolher a opção
+        //Cria a segunda janela para escolher a opção
         GtkWidget *choice_dialog = gtk_dialog_new_with_buttons("Escolha de Método",
                                                                GTK_WINDOW(parent_window),
                                                                GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -223,7 +218,6 @@ void encriptar(GtkWidget *widget, gpointer data) {
                                                                 NULL);
             GtkWidget *msg_content_area = gtk_dialog_get_content_area(GTK_DIALOG(msg_dialog));
             GtkWidget *msg_entry = gtk_entry_new();
-            gtk_entry_set_placeholder_text(GTK_ENTRY(msg_entry), "Digite sua mensagem aqui");
             gtk_container_add(GTK_CONTAINER(msg_content_area), msg_entry);
             gtk_widget_show_all(msg_dialog);
 
@@ -231,6 +225,7 @@ void encriptar(GtkWidget *widget, gpointer data) {
                 const char *msg_text = gtk_entry_get_text(GTK_ENTRY(msg_entry));
 
                 FILE *mensagem_crpt = fopen("mensagem_encriptada.txt", "w+");
+                //Loop percorre cada caractere da string msg_text até encontrar o caractere nulo
                 for (int i = 0; msg_text[i] != '\0'; i++) {
                     mpz_t encriptada;
                     mpz_init_set_ui(encriptada, (unsigned char)msg_text[i]);
@@ -274,6 +269,7 @@ void encriptar(GtkWidget *widget, gpointer data) {
                 gtk_widget_destroy(error_msg);
             } else {
                 char texto;
+                //Loop lê um caractere por vez do arquivo até fgetc retornar EOF (fim do arquivo) 
                 while ((texto = fgetc(arquivoEntrada)) != EOF) {
                     mpz_t mensagem, encriptada;
                     mpz_init_set_ui(mensagem, (unsigned char)texto);
@@ -319,15 +315,12 @@ void desencriptar(GtkWidget *widget, gpointer data) {
     gtk_container_add(GTK_CONTAINER(content_area), label);
 
     GtkWidget *entry_p = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_p), "P");
     gtk_container_add(GTK_CONTAINER(content_area), entry_p);
 
     GtkWidget *entry_q = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_q), "Q");
     gtk_container_add(GTK_CONTAINER(content_area), entry_q);
 
     GtkWidget *entry_e = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_e), "E");
     gtk_container_add(GTK_CONTAINER(content_area), entry_e);
 
     gtk_widget_show_all(dialog);
@@ -381,7 +374,6 @@ void desencriptar(GtkWidget *widget, gpointer data) {
                                                                 NULL);
             GtkWidget *msg_content_area = gtk_dialog_get_content_area(GTK_DIALOG(msg_dialog));
             GtkWidget *msg_entry = gtk_entry_new();
-            gtk_entry_set_placeholder_text(GTK_ENTRY(msg_entry), "Digite a mensagem encriptada");
             gtk_container_add(GTK_CONTAINER(msg_content_area), msg_entry);
             gtk_widget_show_all(msg_dialog);
 
@@ -393,6 +385,7 @@ void desencriptar(GtkWidget *widget, gpointer data) {
                 mpz_t numero_encriptado;
                 mpz_init(numero_encriptado);
 
+                //Quebra msg_text em pedaços separados por espaços
                 char *token = strtok((char *)msg_text, " ");
                 while (token != NULL) {
                     mpz_set_str(numero_encriptado, token, 10);
@@ -400,6 +393,7 @@ void desencriptar(GtkWidget *widget, gpointer data) {
                     mpz_init(desencriptado);
                     mpz_powm(desencriptado, numero_encriptado, d, n);
 
+                    //Converte o valor armazenado e escreve no arquivo
                     unsigned long char_val = mpz_get_ui(desencriptado);
                     fprintf(mensagem_desencriptada, "%c", (char)char_val);
                     printf("%c", (char)char_val);
@@ -447,11 +441,13 @@ void desencriptar(GtkWidget *widget, gpointer data) {
                 mpz_t numero;
                 mpz_init(numero);
 
+                //Loop lê os números até gmp_fscanf retornar EOF (fim do arquivo)
                 while (gmp_fscanf(arquivoEntrada, "%Zd", numero) != EOF) {
                     mpz_t desencriptado;
                     mpz_init(desencriptado);
                     mpz_powm(desencriptado, numero, d, n);
 
+                    //Converte o valor armazenado e escreve no arquivo
                     unsigned long char_val = mpz_get_ui(desencriptado);
                     fprintf(arquivoSaida, "%c", (char)char_val);
                     printf("%c", (char)char_val);
