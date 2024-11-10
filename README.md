@@ -2,9 +2,9 @@
 
 Este projeto foi solicitado pelo Professor Bruno Pimentel para a matéria de **Matemática Discreta**. O objetivo é implementar um sistema de criptografia utilizando **RSA**. O projeto foi desenvolvido por uma equipe composta por:
 
-- **Alexia Rodrigues**
+- [Alexia Rodrigues](https://github.com/alexias1)
 - **Bárbara Albuquerque**
-- **Lara Nogueira**
+- [Lara Nogueira](https://github.com/LaraNogueiraAyres)
 
 A implementação foi feita em **C**, utilizando as bibliotecas **GMP** (para manipulação de números grandes) e **GTK** (para criação da interface gráfica).
 
